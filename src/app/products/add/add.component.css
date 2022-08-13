@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* .form-add{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  } */
+
+  .card-class{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+ 

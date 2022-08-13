@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+  }
+  .add-button{
+    float: right;
+    margin: 12px;
+    width: 100px;
+  }
+  ::ng-deep th.mat-header-cell{
+    width: 200px;
+    min-width: 200px;
+}
+th.mat-header-cell {
+  text-align: center;
+}
+.mat-cell {
+  
+  text-align: center;
+}
+.descri {
+  text-align: justify;
+  padding: 19px;
+  /* word-spacing: 0px; */
+}
+  
