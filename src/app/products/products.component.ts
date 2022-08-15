@@ -76,7 +76,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.dataService.deleteProduct(id).subscribe((response) => {
           console.log(response);
           this.loadData();
-
         });
 
       }
@@ -94,5 +93,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
 
 }

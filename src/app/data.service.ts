@@ -33,7 +33,7 @@ export class DataService {
     return throwError(errorMessage);
   }
   public sendGetRequest(){
-    // Add safe, URL encoded _page and _limit parameters 
+    // Add safe, URL encoded _page and _limit parameters
 
     return this.httpClient.get(this.REST_API_SERVER, {  params: new HttpParams({fromString: "_page=1&_limit=5"}), observe: "response"}).pipe(retry(3), catchError(this.handleError), tap(res => {
       console.log(res.headers.get('Link'));
@@ -68,16 +68,26 @@ export class DataService {
     this.first  = links["first"];
     this.last   = links["last"];
     this.prev   = links["prev"];
-    this.next   = links["next"]; 
+    this.next   = links["next"];
   }
 
   /** POST: add a new hero to the database */
   addProduct(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>(this.REST_API_SERVER, product, httpOptions);  
+    return this.httpClient.post<Product>(this.REST_API_SERVER, product, httpOptions);
   }
+
+
+  updateProduct(product: Product): Observable<Product> {
+    return this.httpClient.put<Product>(this.REST_API_SERVER + '/' + product.id, product, httpOptions);
+  }
+
   deleteProduct(id: string): Observable<any> {
     console.log(id)
     return this.httpClient.delete(`${this.REST_API_SERVER}/${id}`)
-}
- 
+  }
+
+  public getProductsById(id){
+    return this.httpClient.get(this.REST_API_SERVER + '/' + id);
+  }
+
 }

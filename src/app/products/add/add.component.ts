@@ -13,37 +13,91 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class AddComponent implements OnInit {
   public myForm: FormGroup;
-  constructor(private dataService: DataService, 
+  public isEdit: boolean = false;
+  id: number;
+
+  constructor(private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,private _snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
+
     this.myForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
       price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
       quantity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
     });
+
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if(this.id) { //edit
+      this.isEdit = true;
+
+      this.dataService.getProductsById(this.id).subscribe((data: any) => {
+        console.log('vrushu data --- ' + JSON.stringify(data));
+        // let productData = data;
+        // delete productData.id;
+        // delete productData.imageUrl;
+
+        // this.myForm.setValue(productData);
+
+        this.myForm.patchValue({
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          quantity: data.quantity
+        });
+      });
+    }
+
   }
+
+
   public myError = (controlName: string, errorName: string) => {
     return this.myForm.controls[controlName].hasError(errorName);
   }
   public onSubmit() {
     if (this.myForm.valid) {
-      console.log(this.myForm.value);
+
       let newProduct = this.myForm.value;
-      this.dataService.addProduct(newProduct).subscribe(data => {
-        console.log(data);
-        if(data.id) {
-          //add toster message -> product added succesfully
-          
-            this._snackBar.open('product added succesfully','undo',{
-              duration:3000
-            });
-          
-          this.router.navigate(['/products']);
-        }
-      });
+
+      if(this.isEdit) {
+        // edit service code goes here
+        newProduct.id = this.id;
+        console.log('newProduct : ' + JSON.stringify(newProduct));
+
+        this.dataService.updateProduct(newProduct).subscribe(data => {
+          console.log(data);
+          if(data.id) {
+            //add toster message -> product added succesfully
+
+              this._snackBar.open('product updated succesfully','undo',{
+                duration:3000
+              });
+
+            this.router.navigate(['/products']);
+          }
+        });
+
+
+
+
+      } else {
+        // add code goes here
+        this.dataService.addProduct(newProduct).subscribe(data => {
+          console.log(data);
+          if(data.id) {
+            //add toster message -> product added succesfully
+
+              this._snackBar.open('product added succesfully','undo',{
+                duration:3000
+              });
+
+            this.router.navigate(['/products']);
+          }
+        });
+      }
     }
   }
 }

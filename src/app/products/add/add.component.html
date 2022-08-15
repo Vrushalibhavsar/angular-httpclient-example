@@ -7,7 +7,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Enter Name</mat-label>
         <input matInput type="name" formControlName="name" id="name">
-        <mat-hint align="start">Not more then 20 characters long.</mat-hint>
+        <mat-hint align="start">Not more then 50 characters long.</mat-hint>
         <mat-error *ngIf="myError('name', 'required')">Name is required</mat-error>
         <mat-error *ngIf="myError('name', 'maxlength')">Limit exceed</mat-error>
       </mat-form-field>
@@ -19,7 +19,7 @@
         <textarea cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="10" matInput id="description"
           formControlName="description"></textarea>
 
-        <mat-hint align="end">Not more then 50 characters long.</mat-hint>
+        <mat-hint align="end">Not more then 1000 characters long.</mat-hint>
         <mat-error *ngIf="myError('description', 'required')">Address is required</mat-error>
         <mat-error *ngIf="myError('description', 'maxlength')">Limit exceed</mat-error>
       </mat-form-field>
@@ -41,7 +41,7 @@
         <mat-error *ngIf="myError('quantity', 'pattern')">Should be Numeric</mat-error>
       </mat-form-field>
       <br>
-      
+
       <button mat-raised-button color="accent" (click)="onSubmit()"   type="submit" [disabled]="!myForm.valid">Submit</button>
 
     </mat-card-content>
