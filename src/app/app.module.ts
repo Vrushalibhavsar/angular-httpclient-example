@@ -24,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from "@angular/forms";
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 
 
@@ -37,7 +39,8 @@ import { ChangeDetectorRef } from '@angular/core';
     AboutComponent,
     NavComponent,
     ProductsComponent,
-    AddComponent
+    AddComponent,
+    ConfirmDialogComponent
     
   ],
   imports: [
@@ -57,6 +60,8 @@ import { ChangeDetectorRef } from '@angular/core';
     ReactiveFormsModule,
     FormsModule,
     MatSnackBarModule,
+    MatDialogModule,
+    
     // MatTableDataSource,
     
     // MatPaginator,
