@@ -10,8 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
-
-
 export interface Product {
   id: number;
   name: string;
@@ -45,10 +43,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-   this.loadData();
+    this.loadData();
   }
 
   loadData() {
@@ -64,34 +62,37 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id) {
-   
-      const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
-        data: {
-          title: 'Confirm Remove Employee',
-          message: 'Are you sure, you want to remove an employee: '+ id        
-        }
-      
+
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Remove Employee',
+        message: 'Are you sure, you want to remove an employee: ' + id
+      }
+
       // this.router.navigate(['/products']);
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-      this.dataService.deleteProduct(id).subscribe((response) => {
-        console.log(response);
-        this.loadData();
-      
+        this.dataService.deleteProduct(id).subscribe((response) => {
+          console.log(response);
+          this.loadData();
+
+        });
+
+      }
     });
-  
-}}
+  }
   /** Announce the change in sort state for assistive technology. */
-  // announceSortChange(sortState: any) {
-//     // This example uses English messages. If your application supports
-//     // multiple language, you would internationalize these strings.
-//     // Furthermore, you can customize the message to add additional
-//     // details about the values being sorted.
-//     if (sortState.direction) {
-//       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-//     } else {
-//       this._liveAnnouncer.announce('Sorting cleared');
-//     }
-//   }
-// }
+  announceSortChange(sortState: any) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+}
