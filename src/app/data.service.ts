@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {  Observable, throwError } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
-import { Product } from './products/products.component';
+import { User } from './users/users.component';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -18,7 +18,7 @@ export class DataService {
   public prev: string = "";
   public next: string = "";
   public last: string = "";
-  private REST_API_SERVER = "http://localhost:3000/products";
+  private REST_API_SERVER = "http://localhost:3000/users";
   constructor(private httpClient: HttpClient) { }
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
@@ -47,7 +47,7 @@ export class DataService {
 
     }));
   }
-  public getProducts(){
+  public getUsers(){
     return this.httpClient.get(this.REST_API_SERVER);
   }
   parseLinkHeader(header :any) {
@@ -72,21 +72,21 @@ export class DataService {
   }
 
   /** POST: add a new hero to the database */
-  addProduct(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>(this.REST_API_SERVER, product, httpOptions);
+  addUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.REST_API_SERVER, user, httpOptions);
   }
 
 
-  updateProduct(product: Product): Observable<Product> {
-    return this.httpClient.put<Product>(this.REST_API_SERVER + '/' + product.id, product, httpOptions);
+  updateUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(this.REST_API_SERVER + '/' + user.id, user, httpOptions);
   }
 
-  deleteProduct(id: string): Observable<any> {
+  deleteUser(id: string): Observable<any> {
     console.log(id)
     return this.httpClient.delete(`${this.REST_API_SERVER}/${id}`)
   }
 
-  public getProductsById(id){
+  public getUsersById(id){
     return this.httpClient.get(this.REST_API_SERVER + '/' + id);
   }
 

@@ -1,15 +1,15 @@
 var faker = require('faker');
 
-var database = { products: []};
+var database = { users: []};
 
-for (var i = 1; i<= 300; i++) {
-  database.products.push({
+for (var i = 1; i<= 5; i++) {
+  database.users.push({
     id: i,
-    name: faker.commerce.productName(),
-    description: faker.lorem.sentences(),
-    price: faker.commerce.price(),
-    imageUrl: "https://source.unsplash.com/1600x900/?product",
-    quantity: faker.random.number()
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
+    username: faker.internet.userName(),
+    city: faker.address.city(),
+    department: faker.commerce.department()
   });
 }
 

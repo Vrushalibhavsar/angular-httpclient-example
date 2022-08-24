@@ -23,10 +23,11 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
 
     this.myForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
-      price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
-      quantity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+      first_name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      last_name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      city: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      department: new FormControl('', [Validators.required, Validators.maxLength(50)])
     });
 
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -34,19 +35,13 @@ export class AddComponent implements OnInit {
     if(this.id) { //edit
       this.isEdit = true;
 
-      this.dataService.getProductsById(this.id).subscribe((data: any) => {
-        console.log('vrushu data --- ' + JSON.stringify(data));
-        // let productData = data;
-        // delete productData.id;
-        // delete productData.imageUrl;
-
-        // this.myForm.setValue(productData);
-
+      this.dataService.getUsersById(this.id).subscribe((data: any) => {
         this.myForm.patchValue({
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          quantity: data.quantity
+          first_name: data.first_name,
+          last_name: data.last_name,
+          username: data.username,
+          city: data.city,
+          department: data.department
         });
       });
     }
@@ -60,41 +55,29 @@ export class AddComponent implements OnInit {
   public onSubmit() {
     if (this.myForm.valid) {
 
-      let newProduct = this.myForm.value;
+      let newUser = this.myForm.value;
 
       if(this.isEdit) {
         // edit service code goes here
-        newProduct.id = this.id;
-        console.log('newProduct : ' + JSON.stringify(newProduct));
-
-        this.dataService.updateProduct(newProduct).subscribe(data => {
-          console.log(data);
+        newUser.id = this.id;
+        this.dataService.updateUser(newUser).subscribe(data => {
           if(data.id) {
-            //add toster message -> product added succesfully
-
-              this._snackBar.open('product updated succesfully','undo',{
+              this._snackBar.open('User updated succesfully','undo',{
                 duration:3000
               });
 
-            this.router.navigate(['/products']);
+            this.router.navigate(['/users']);
           }
         });
-
-
-
-
       } else {
         // add code goes here
-        this.dataService.addProduct(newProduct).subscribe(data => {
-          console.log(data);
+        this.dataService.addUser(newUser).subscribe(data => {
           if(data.id) {
-            //add toster message -> product added succesfully
-
-              this._snackBar.open('product added succesfully','undo',{
+              this._snackBar.open('User added succesfully','undo',{
                 duration:3000
               });
 
-            this.router.navigate(['/products']);
+            this.router.navigate(['/users']);
           }
         });
       }

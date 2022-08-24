@@ -10,31 +10,32 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
-export interface Product {
+export interface User {
   id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  price: string;
-  quantity: number;
+  first_name: string;
+  last_name: string;
+  username: string;
+  city: string;
+  department: string;
 }
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css'],
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = [
     'id',
-    'name',
-    'description',
-    'price',
-    'quantity',
-    'actionsColumn',
+    'first_name',
+    'last_name',
+    'username',
+    'city',
+    'department',
+    'actionsColumn'
   ];
   dataSource: any;
   constructor(
@@ -50,9 +51,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.dataService.getProducts().subscribe((data: any) => {
+    this.dataService.getUsers().subscribe((data: any) => {
 
-      this.dataSource = new MatTableDataSource<Product>(data);
+      this.dataSource = new MatTableDataSource<User>(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
@@ -61,19 +62,19 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     // this.dataSource.sort = this.sort;
   }
 
-  deleteProduct(id) {
+  deleteUser(id) {
 
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Confirm Remove Employee',
-        message: 'Are you sure, you want to remove an employee: ' + id
+        title: 'Confirm Remove User',
+        message: 'Are you sure, you want to remove user: ' + id
       }
 
-      // this.router.navigate(['/products']);
+      // this.router.navigate(['/users']);
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-        this.dataService.deleteProduct(id).subscribe((response) => {
+        this.dataService.deleteUser(id).subscribe((response) => {
           console.log(response);
           this.loadData();
         });

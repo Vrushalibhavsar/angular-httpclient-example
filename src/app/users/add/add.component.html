@@ -1,0 +1,51 @@
+<mat-card class="card-class">
+  <mat-card-title>Please Add User Details</mat-card-title>
+
+  <form [formGroup]="myForm" novalidate>
+    <mat-card-content>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Firstname</mat-label>
+        <input matInput type="first_name" formControlName="first_name" id="first_name">
+        <mat-error *ngIf="myError('first_name', 'required')">Firstname is required</mat-error>
+        <mat-error *ngIf="myError('first_name', 'maxlength')">Limit exceed</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Lastname</mat-label>
+        <input matInput type="last_name" formControlName="last_name" id="last_name">
+        <mat-error *ngIf="myError('last_name', 'required')">Lastname is required</mat-error>
+        <mat-error *ngIf="myError('last_name', 'maxlength')">Limit exceed</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Username</mat-label>
+        <input matInput type="username" formControlName="username" id="username">
+        <mat-error *ngIf="myError('username', 'required')">Username is required</mat-error>
+        <mat-error *ngIf="myError('username', 'maxlength')">Limit exceed</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter City</mat-label>
+        <input matInput type="city" formControlName="city" id="city">
+        <mat-error *ngIf="myError('city', 'required')">City is required</mat-error>
+        <mat-error *ngIf="myError('city', 'maxlength')">Limit exceed</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Department</mat-label>
+        <input matInput type="department" formControlName="department" id="department">
+        <mat-error *ngIf="myError('department', 'required')">Department is required</mat-error>
+        <mat-error *ngIf="myError('department', 'maxlength')">Limit exceed</mat-error>
+      </mat-form-field>
+      <br>
+
+      <button mat-raised-button color="accent" (click)="onSubmit()"   type="submit" [disabled]="!myForm.valid">Submit</button>
+    </mat-card-content>
+  </form>
+
+</mat-card>
