@@ -13,6 +13,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class AddComponent implements OnInit {
   public myForm: FormGroup;
+  public isEdit: boolean = false;
+  id: number;
+  
   constructor(private dataService: DataService, 
     private route: ActivatedRoute,
     private router: Router,private _snackBar: MatSnackBar ) { }
@@ -24,6 +27,26 @@ export class AddComponent implements OnInit {
       price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
       quantity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
     });
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if(this.id) { //edit
+      this.isEdit = true;
+
+      this.dataService.getProductsById(this.id).subscribe((data: any) => {
+        console.log('vrushu data --- ' + JSON.stringify(data));
+        // let productData = data;
+        // delete productData.id;
+        // delete productData.imageUrl;
+
+        // this.myForm.setValue(productData);
+
+        this.myForm.patchValue({
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          quantity: data.quantity
+        });
+      });
+    }
   }
   public myError = (controlName: string, errorName: string) => {
     return this.myForm.controls[controlName].hasError(errorName);
